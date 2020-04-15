@@ -1,7 +1,8 @@
 //To complete the task of "jump the queue", I modify the enQueue function
-//When the newcomer is equal to the FORMER but different from LATTER, just insert it between them
-#ifndef LINKQUEUE
-#define LINKQUEUE
+//When the newcomer is equal to the FORMER but different from the LATTER, just insert it between them
+
+#ifndef JUMPQUEUE_H
+#define JUMPQUEUE_H
 
 #include <iostream>
 using namespace std;
@@ -68,7 +69,7 @@ bool linkQueue<elemType>::isEmpty()const
 }
 
 template <class elemType>
-void linkQueue<elemType>::enQueue(const elemType& x, const elemType& n)     //pay attention to the argument list
+void linkQueue<elemType>::enQueue(const elemType& x, const elemType& n)    //pay attention to the argument list
 {
 	if (rear == NULL)
 		front = rear = new node(x,n);
@@ -76,19 +77,19 @@ void linkQueue<elemType>::enQueue(const elemType& x, const elemType& n)     //pa
 		bool flag = true;
 		node* p = front, * q;
 		while (p->next) {
-			if (x == p->data && p->next->data != x)
+			if (x == p->data && p->next->data != x)            //meanwhile satisfy two conditions
 			{
 				flag = false;
 				q = new node(x, n, p->next);
 				p->next = q;
-				break;
+				break;                                     //break out of the loop
 			}
 			else
 			{
 				p = p->next;
 			}
 		}
-		if (flag) rear = rear->next = new node(x, n);
+		if (flag) rear = rear->next = new node(x, n);              //traverse the whole queue but find nothing, then to the rear
 	}
 }
 
