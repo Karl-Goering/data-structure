@@ -1,4 +1,5 @@
 //original code
+//must use "linkQueue.h"
 #ifndef BINARYTREE
 #define BINARYTREE
 
@@ -58,7 +59,7 @@ public:
      void midOrder() const;
      void postOrder() const;
      void levelOrder() const;
-     void creatTree(T flag);
+     void createTree(T flag);
      T parent(T x,T flag) const {return flag;}
 private:
       Node *find(T x,Node *t) const;
@@ -224,4 +225,48 @@ T binaryTree<T>::rchild(T x,T flag) const
     return tmp->right->data;
 }
 
+
+
+//createTree
+template <class T>
+void binaryTree<T>::createTree(T flag)
+{
+    linkQueue<Node *> que;
+    Node *tmp;
+    T x,ldata,rdata;
+    cout << "\n please input the root:";
+    cin >> x;
+    root = new Node(x);
+    que.enQueue(root);
+
+    while(!que.isEmpty()){
+        tmp = que.deQueue();
+        cout << "\n please input" << tmp->data << "'s two children";
+        cin >> ldata >> rdata;
+        if(ldata != flag) que.enQueue(tmp->left = new Node(ldata));
+        if(rdata != flag) que.enQueue(tmp->right = new Node(rdata));
+    }
+
+    cout << "create completed!\n";
+}
+
+
+
+//printTree
+template <class T>
+void printTree(const binaryTree<T> &t,T flag)
+{
+    linkQueue<T> q;
+    q.enQueue(t.root->data);
+    cout << endl;
+    while(!q.isEmpty()){
+        char p,l,r;
+        p = q.deQueue();
+        l = t.lchild(p,flag);
+        r = t.rchild(p,flag);
+        cout << p << " " << l << " " << r << endl;
+        if(l != flag) q.enQueue(l);
+        if(r != flag) q.enQueue(r);
+    }
+}
 #endif
