@@ -1,3 +1,4 @@
+//original header file from book
 #ifndef SEQSTACK
 #define SEQSTACK
 

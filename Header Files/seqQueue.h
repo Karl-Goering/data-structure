@@ -1,3 +1,4 @@
+//original header file from book
 #ifndef SEQQUEUE
 #define SEQQUEUE
 
