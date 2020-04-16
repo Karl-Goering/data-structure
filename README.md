@@ -1,4 +1,4 @@
-data structure
+Data Structure
 ==
 Introduction
 --
@@ -9,7 +9,7 @@ A simple collection of my homework when I study data structure
 <br>
 <br>
 
-Original Code
+Original Header Files
 --
 [linkQueue](https://github.com/RIP8964/Homework/blob/master/Header%20Files/linkQueue.h)<br>
 [seqQueue](https://github.com/RIP8964/Homework/blob/master/Header%20Files/seqQueue.h)<br>
@@ -18,6 +18,6 @@ Original Code
 <br>
 <br>
 
-Modified Code
+Modified Header Files
 --
 [jumpQueue](https://github.com/RIP8964/Homework/blob/master/Header%20Files/jumpQueue.h)<br>

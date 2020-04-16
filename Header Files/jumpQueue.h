@@ -1,5 +1,6 @@
-//To complete the task of "jump the queue", I modify the enQueue function
-//When the newcomer is equal to the FORMER but different from the LATTER, just insert it between them
+/* To complete the task of "jump the queue", I modify the enQueue function,
+when the newcomer is equal to the FORMER but different from the LATTER, just 
+insert it between them */
 
 #ifndef JUMPQUEUE_H
 #define JUMPQUEUE_H

@@ -1,4 +1,4 @@
-//original header file from book
+//original code
 #ifndef LINKQUEUE
 #define LINKQUEUE
 
