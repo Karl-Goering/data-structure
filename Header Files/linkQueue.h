@@ -107,7 +107,7 @@ elemType linkQueue<elemType>::deQueue()
     node *tmp = front;
     elemType value = front->data;
     front = front->next;
-    if(front == NULL) rear == NULL;
+    if(front == NULL) rear = NULL;
     delete tmp;
     return value;
 }
