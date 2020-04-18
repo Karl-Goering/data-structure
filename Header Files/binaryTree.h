@@ -1,4 +1,4 @@
-//original code
+//modified code
 //must use "linkQueue.h"
 #ifndef BINARYTREE
 #define BINARYTREE
@@ -13,7 +13,6 @@ template <class T>
 class bTree
 {
     public:
-         virtual void clear() = 0;
          virtual bool isEmpty() const = 0;
          virtual T Root (T flag) const = 0;
          virtual T parent (T x,T flag) const = 0;
@@ -32,14 +31,14 @@ class bTree
 //definition of binaryTree
 template <class T>
 class binaryTree: public bTree<T>{
-    friend void printTree(const binaryTree &t,T flag);
+    
 private:
       struct Node{
-          Node *left,*right;
+          
           T data;
-
-          Node(): left(NULL),right(NULL){}
-          Node(T item,Node *L = NULL,Node *R = NULL): data(item),left(L),right(R){}
+          Node *left,*right,*parent;
+          Node(): left(NULL),right(NULL),parent(NULL) {}
+          Node(T item,Node *L = NULL,Node *R = NULL,Node *P = NULL): data(item),left(L),right(R),parent(P){}
           ~Node(){}
       };
 
@@ -48,7 +47,6 @@ public:
      binaryTree():root(NULL){}
      binaryTree(T x){root = new Node(x);}
      ~binaryTree();
-     void clear();
      bool isEmpty() const;
      T Root(T flag) const;
      T lchild(T x,T flag) const;
@@ -59,7 +57,7 @@ public:
      void midOrder() const;
      void postOrder() const;
      void levelOrder() const;
-     void createTree(T flag);
+     void createTree(int x,T flag);
      T parent(T x,T flag) const {return flag;}
 private:
       Node *find(T x,Node *t) const;
@@ -94,6 +92,9 @@ void binaryTree<T>::clear(binaryTree<T>::Node *&t)
 {
     if(t == NULL) return;
     clear(t->left);
+    clear(t->right);
+    delete t;
+    t = NULL;
 }
 
 template <class T>
@@ -120,7 +121,7 @@ void binaryTree<T>::preOrder(binaryTree<T>::Node *t) const
 template <class T>
 void binaryTree<T>::preOrder() const
 {
-    cout << "\n preorder traversal:";
+    cout << endl;
     preOrder(root);
 }
 
@@ -136,7 +137,7 @@ void binaryTree<T>::postOrder(binaryTree<T>::Node *t) const
 template <class T>
 void binaryTree<T>::postOrder() const
 {
-    cout << "\n postorder traversal:";
+    cout << endl;
     postOrder(root);
 }
 
@@ -152,7 +153,7 @@ void binaryTree<T>::midOrder(binaryTree<T>::Node *t) const
 template <class T>
 void binaryTree<T>::midOrder() const
 {
-    cout << "\n midorder traversal:";
+    cout << endl;
     midOrder(root);
 }
 
@@ -162,7 +163,7 @@ void binaryTree<T>::levelOrder() const
     linkQueue<Node *> que;
     Node *tmp;
 
-    cout << "\n levelorder traversal:";
+    cout << endl;
     que.enQueue(root);
 
     while(!que.isEmpty()){
@@ -228,45 +229,29 @@ T binaryTree<T>::rchild(T x,T flag) const
 
 
 //createTree
-template <class T>
-void binaryTree<T>::createTree(T flag)
+template<class T>
+void binaryTree<T>::createTree(int n, T flag)
 {
-    linkQueue<Node *> que;
-    Node *tmp;
-    T x,ldata,rdata;
-    cout << "\n please input the root:";
-    cin >> x;
-    root = new Node(x);
-    que.enQueue(root);
-
-    while(!que.isEmpty()){
-        tmp = que.deQueue();
-        cout << "\n please input" << tmp->data << "'s two children";
-        cin >> ldata >> rdata;
-        if(ldata != flag) que.enQueue(tmp->left = new Node(ldata));
-        if(rdata != flag) que.enQueue(tmp->right = new Node(rdata));
-    }
-
-    cout << "create completed!\n";
+	Node** p = NULL;
+	T ldata, rdata;
+	p = new Node * [n + 1];
+	for (int i = 1; i <= n; ++i) {
+		p[i] = new Node(i);
+	}
+	for (int i = 1; i <= n; ++i) {
+		cin >> ldata >> rdata;
+		if (ldata != flag) {
+			p[i]->left = p[ldata];
+			p[i]->left->parent = p[i];
+		}
+		if (rdata != flag) {
+			p[i]->right = p[rdata];
+			p[i]->right->parent = p[i];
+		}
+	}
+	for (int i = 1; i <= n; ++i) {
+		if (p[i]->parent == NULL) root = p[i];
+	}
 }
 
-
-
-//printTree
-template <class T>
-void printTree(const binaryTree<T> &t,T flag)
-{
-    linkQueue<T> q;
-    q.enQueue(t.root->data);
-    cout << endl;
-    while(!q.isEmpty()){
-        char p,l,r;
-        p = q.deQueue();
-        l = t.lchild(p,flag);
-        r = t.rchild(p,flag);
-        cout << p << " " << l << " " << r << endl;
-        if(l != flag) q.enQueue(l);
-        if(r != flag) q.enQueue(r);
-    }
-}
 #endif
